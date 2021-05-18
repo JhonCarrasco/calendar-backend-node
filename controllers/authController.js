@@ -39,8 +39,7 @@ const createUser = async (req, res = response) => {
 
         
     } catch (error) {
-        console.log(error);
-
+        
         res.status(500).json({
             ok: false,
             msg: 'Try with your administrator'
@@ -85,8 +84,7 @@ const login = async (req, res = response) => {
 
 
     } catch (error) {
-        console.log(error);
-
+        
         res.status(500).json({
             ok: false,
             msg: 'Try with your administrator'
@@ -100,10 +98,20 @@ const refreshToken = async (req, res = response) => {
 
     const token = await generateJWT( uid, name );
 
-    res.status(202).json({
-        ok: true,
-        token
-    });
+    if( token ) {
+        return res.status(202).json({
+            ok: true,
+            uid,
+            name,
+            token
+        });
+    } else {
+        return res.status(400).json({
+            ok: false
+        });
+    }
+
+    
 }
 
 
