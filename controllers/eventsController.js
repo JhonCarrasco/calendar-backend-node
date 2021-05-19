@@ -6,13 +6,22 @@ const Event = require('../models/Event');
 
 const getEvents = async (req, res = response) => {
 
-    const events = await Event.find()
-    .populate('user', 'name');
+    try {
+        
+        const events = await Event.find()
+        .populate('user', 'name');
 
-    return res.status(200).json({
-        ok: true,
-        events
-    });
+        return res.status(200).json({
+            ok: true,
+            events
+        });
+
+    } catch (error) {
+        return res.status(500).json({
+            ok: false,
+            msg: 'Try with your administrator'
+        });
+    }
 
 }
 
